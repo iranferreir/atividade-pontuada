@@ -1,0 +1,62 @@
+import os
+os.system("cls || clear")
+
+class Biblioteca:
+    def __init__(self):
+        self.livros = []
+        self.emprestimos = {}
+
+    def adicionar_livro(self, titulo, autor):
+        """Adiciona um livro na biblioteca."""
+        livro = {'titulo': titulo, 'autor': autor}
+        self.livros.append(livro)
+        print(f'Livro "{titulo}" adicionado com sucesso.')
+
+    def remova_um_livro(self, titulo):
+        """Remove um livro da biblioteca pelo título."""
+        for livro in self.livros:
+            if livro['titulo'] == titulo:
+                self.livros.remove(livro)
+                print(f'Livro "{titulo}" removido com sucesso.')
+                return
+        print(f'Livro "{titulo}" não encontrado.')
+
+    def listar_de_livros(self):
+        """Lista todos os livros da biblioteca."""
+        if not self.livros:
+            print("Nenhum livro cadastrado.")
+            return
+        print("Livros disponíveis:")
+        for livro in self.livros:
+            print(f'Título: {livro["titulo"]}, Autor: {livro["autor"]}')
+
+    def buscar_um_livro(self, titulo):
+        """Busca um livro pelo título."""
+        for livro in self.livros:
+            if livro['titulo'] == titulo:
+                print(f'Livro encontrado: Título: {livro["titulo"]}, Autor: {livro["autor"]}')
+                return
+        print(f'Livro "{titulo}" não encontrado.')
+
+    def registro_um_emprestimo(self, titulo, usuario):
+        """Registra um empréstimo de livro."""
+        for livro in self.livros:
+            if livro['titulo'] == titulo:
+                if titulo not in self.emprestimos:
+                    self.emprestimos[titulo] = usuario
+                    print(f'Empréstimo do livro "{titulo}" registrado para {usuario}.')
+                    return
+                else:
+                    print(f'O livro "{titulo}" já está emprestado.')
+                    return
+        print(f'Livro "{titulo}" não encontrado.')
+
+if __name__ == "__main__":
+    biblioteca = Biblioteca()
+    biblioteca.adicionar_livro("1984", "George Orwell")
+    biblioteca.adicionar_livro("O Senhor dos Anéis", "J.R.R. Tolkien")
+    biblioteca.listar_livros()
+    biblioteca.buscar_livro("1984")
+    biblioteca.registrar_emprestimo("1984", "Alice")
+    biblioteca.remover_livro("O Senhor dos Anéis")
+    biblioteca.listar_livros()
