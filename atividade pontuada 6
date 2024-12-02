@@ -1,0 +1,72 @@
+"""
+Foi feito uma pesquisa entra os habitantes de uma regiao.
+Foram coletados os dados de idade, sexo(M/F) e salario.
+Faca um algoritmo que informe:
+
+a)a media de salaria do grupo:
+b)maior e menor idade do grupo:
+c)quantidade de mulhures com salario a partir de R$ 5.000.00.
+
+Crie um menu com duas opcoes.
+
+codigo| Descriçao
+    1 | Adicionar pessoa 
+    2 | Exibir resultados e sair
+
+O final da leitura de dados se dara com quando o usuario digitar o numero codigo 2.
+"""
+
+import os 
+os.system("cls || clear")
+
+
+def main():
+    # Lista para armazenar os dados das pessoas
+    pessoas = []
+
+    while True:
+        print("\nMenu:")
+        print("1 - Adicionar pessoa")
+        print("2 - Exibir resultados e sair")
+        
+        # Entrada do código de operação
+        opcao = input("Escolha uma opção (1/2): ").strip()
+        
+        if opcao == "1":
+            # Coletar os dados da pessoa
+            try:
+                idade = int(input("Informe a idade: "))
+                sexo = input("Informe o sexo (M/F): ").strip().upper()
+                if sexo not in ['M', 'F']:
+                    print("Sexo inválido. Por favor, informe M ou F.")
+                    continue
+                salario = float(input("Informe o salário: R$ "))
+                pessoas.append({"idade": idade, "sexo": sexo, "salario": salario})
+            except ValueError:
+                print("Entrada inválida! Certifique-se de inserir valores numéricos para idade e salário.")
+        
+        elif opcao == "2":
+            if not pessoas:
+                print("\nNenhum dado foi inserido.")
+                break
+            
+            # Processar os dados
+            total_salario = sum(p["salario"] for p in pessoas)
+            media_salario = total_salario / len(pessoas) if pessoas else 0
+            maior_idade = max(p["idade"] for p in pessoas)
+            menor_idade = min(p["idade"] for p in pessoas)
+            mulheres_acima_5000 = sum(1 for p in pessoas if p["sexo"] == "F" and p["salario"] >= 5000)
+            
+            # Exibir os resultados
+            print("\nResultados:")
+            print(f"a) A média salarial do grupo: R$ {media_salario:.2f}")
+            print(f"b) Maior idade do grupo: {maior_idade}")
+            print(f"   Menor idade do grupo: {menor_idade}")
+            print(f"c) Quantidade de mulheres com salário a partir de R$ 5.000,00: {mulheres_acima_5000}")
+            break
+        
+        else:
+            print("Opção inválida. Tente novamente.")
+
+if __name__ == "__main__":
+    main()
